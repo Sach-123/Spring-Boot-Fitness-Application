@@ -26,6 +26,7 @@ function App() {
       setAuthReady(true);
     }
   }, [token, tokenData, dispatch]);
+  
 
   return (
     <Router>
