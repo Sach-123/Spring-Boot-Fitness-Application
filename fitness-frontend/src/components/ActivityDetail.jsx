@@ -1,74 +1,201 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router'
-import { getActivityDetail } from '../services/api';
-import { Box, Card, CardContent, Divider, Typography } from '@mui/material';
+import { useNavigate, useParams } from 'react-router'
+import { getActivityDetail } from '../services/api'
+import { Box, Card, CardContent, Chip, Grid, Paper, Stack, Typography } from '@mui/material'
 
 const ActivityDetail = () => {
-  const { id } = useParams();
-  const [activity, setActivity] = useState(null);
-  const [recommendation, setRecommendation] = useState(null);
+  const { id } = useParams()
+  const navigate = useNavigate()
+  const [activity, setActivity] = useState(null)
 
   useEffect(() => {
     const fetchActivityDetail = async () => {
       try {
-        const response = await getActivityDetail(id);
-        setActivity(response.data);
-        setRecommendation(response.data.recommendation);
+        const response = await getActivityDetail(id)
+        setActivity(response.data)
       } catch (error) {
-        console.error(error);
+        console.error(error)
       }
     }
 
-    fetchActivityDetail();
-  }, [id]);
+    fetchActivityDetail()
+  }, [id])
 
   if (!activity) {
-    return <Typography>Loading...</Typography>
+    return (
+      <Paper sx={{ p: 6, maxWidth: 720, mx: 'auto', textAlign: 'center' }}>
+        <Typography variant="h6">Loading your activity insights...</Typography>
+      </Paper>
+    )
   }
-  return (
-    <Box sx={{ maxWidth: 800, mx: 'auto', p: 2 }}>
-            <Card sx={{ mb: 2 }}>
-                <CardContent>
-                    <Typography variant="h5" gutterBottom>Activity Details</Typography>
-                    <Typography>Type: {activity.type}</Typography>
-                    <Typography>Duration: {activity.duration} minutes</Typography>
-                    <Typography>Calories Burned: {activity.caloriesBurned}</Typography>
-                    <Typography>Date: {new Date(activity.createdAt).toLocaleString()}</Typography>
-                </CardContent>
-            </Card>
 
-            {recommendation && (
-                <Card>
-                    <CardContent>
-                        <Typography variant="h5" gutterBottom>AI Recommendation</Typography>
-                        <Typography variant="h6">Analysis</Typography>
-                        <Typography paragraph>{activity.recommendation}</Typography>
-                        
-                        <Divider sx={{ my: 2 }} />
-                        
-                        <Typography variant="h6">Improvements</Typography>
-                        {activity?.improvements?.map((improvement, index) => (
-                            <Typography key={index} paragraph>• {activity.improvements}</Typography>
-                        ))}
-                        
-                        <Divider sx={{ my: 2 }} />
-                        
-                        <Typography variant="h6">Suggestions</Typography>
-                        {activity?.suggestions?.map((suggestion, index) => (
-                            <Typography key={index} paragraph>• {suggestion}</Typography>
-                        ))}
-                        
-                        <Divider sx={{ my: 2 }} />
-                        
-                        <Typography variant="h6">Safety Guidelines</Typography>
-                        {activity?.safety?.map((safety, index) => (
-                            <Typography key={index} paragraph>• {safety}</Typography>
-                        ))}
-                    </CardContent>
-                </Card>
-            )}
-        </Box>
+  const createdAt = activity.createdAt ? new Date(activity.createdAt) : null
+
+  const metrics = [
+    {
+      label: 'Duration',
+      value: activity.duration,
+      suffix: 'min',
+      description: 'Total time spent in this session',
+    },
+    {
+      label: 'Calories',
+      value: activity.caloriesBurned,
+      suffix: 'kcal',
+      description: 'Energy you expended during the activity',
+    },
+  ]
+
+  return (
+    <Stack spacing={4} sx={{ maxWidth: 960, mx: 'auto' }}>
+      <Paper
+        sx={{
+          p: { xs: 4, md: 6 },
+          background: 'linear-gradient(135deg, rgba(18,25,40,0.95) 0%, rgba(12,18,34,0.9) 100%)',
+        }}
+      >
+        <Stack spacing={3}>
+          <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
+            <Stack spacing={1}>
+              <Typography variant="overline" sx={{ color: 'rgba(125,211,252,0.7)', letterSpacing: 3 }}>
+                Activity Overview
+              </Typography>
+              <Typography variant="h4" fontWeight={700} sx={{ textTransform: 'capitalize' }}>
+                {activity.type?.toLowerCase() || 'Fitness Session'}
+              </Typography>
+            </Stack>
+            <Stack spacing={1} alignItems="flex-end">
+              <Chip
+                label={`${activity.caloriesBurned ?? 0} kcal`}
+                sx={{ background: 'rgba(139,107,255,0.18)', color: '#c3b5ff', fontWeight: 600 }}
+              />
+              {createdAt && (
+                <Typography variant="caption" sx={{ color: 'rgba(148,163,184,0.7)' }}>
+                  Logged {createdAt.toLocaleString()}
+                </Typography>
+              )}
+            </Stack>
+          </Stack>
+
+          <Grid container spacing={3} columns={12}>
+            {metrics.map((metric) => (
+              <Grid item xs={12} sm={6} key={metric.label}>
+                <MetricCard {...metric} />
+              </Grid>
+            ))}
+          </Grid>
+
+          <Typography variant="body2" sx={{ color: 'rgba(226,232,240,0.65)' }}>
+            Keep exploring the insights below to discover how to iterate on this session and push towards your goals.
+          </Typography>
+
+          <Stack direction="row" spacing={2}>
+            <ButtonLike onClick={() => navigate(-1)}>← Back to activity stream</ButtonLike>
+          </Stack>
+        </Stack>
+      </Paper>
+
+      {(activity.recommendation || activity.improvements?.length || activity.suggestions?.length || activity.safety?.length) && (
+        <Paper sx={{ p: { xs: 4, md: 5 }, display: 'flex', flexDirection: 'column', gap: 3 }}>
+          {activity.recommendation && (
+            <Stack spacing={1.5}>
+              <Typography variant="overline" sx={{ color: 'rgba(125,211,252,0.7)', letterSpacing: 3 }}>
+                AI Recommendation
+              </Typography>
+              <Typography variant="body1" sx={{ color: 'rgba(226,232,240,0.8)' }}>
+                {activity.recommendation}
+              </Typography>
+            </Stack>
+          )}
+
+          {activity.improvements?.length ? (
+            <InsightSection title="Improvements" items={activity.improvements} />
+          ) : null}
+
+          {activity.suggestions?.length ? (
+            <InsightSection title="Suggestions" items={activity.suggestions} />
+          ) : null}
+
+          {activity.safety?.length ? (
+            <InsightSection title="Safety Guidelines" items={activity.safety} />
+          ) : null}
+        </Paper>
+      )}
+    </Stack>
   )
 }
+
+const InsightSection = ({ title, items }) => (
+  <Stack spacing={1.5}>
+    <Typography variant="subtitle1" fontWeight={600}>
+      {title}
+    </Typography>
+    <Stack component="ul" spacing={1} sx={{ listStyle: 'none', p: 0, m: 0 }}>
+      {items.map((item, index) => (
+        <Typography key={`${title}-${index}`} component="li" variant="body2" sx={{ color: 'rgba(226,232,240,0.7)' }}>
+          • {item}
+        </Typography>
+      ))}
+    </Stack>
+  </Stack>
+)
+
+const ButtonLike = ({ onClick, children }) => (
+  <Box
+    component="button"
+    onClick={onClick}
+    sx={{
+      appearance: 'none',
+      border: '1px solid rgba(148,163,184,0.25)',
+      borderRadius: 12,
+      background: 'rgba(15,23,42,0.5)',
+      color: '#e2e8f0',
+      fontWeight: 600,
+      cursor: 'pointer',
+      px: 3,
+      py: 1.25,
+      transition: 'all 0.2s ease',
+      textAlign: 'left',
+      ':hover': {
+        borderColor: 'rgba(125,211,252,0.6)',
+        color: '#7dd3fc',
+      },
+    }}
+  >
+    {children}
+  </Box>
+)
+
+const MetricCard = ({ label, value, suffix, description }) => (
+  <Card
+    variant="outlined"
+    sx={{
+      height: '100%',
+      background: 'linear-gradient(145deg, rgba(15,23,42,0.82) 0%, rgba(15,23,42,0.65) 100%)',
+      border: '1px solid rgba(148,163,184,0.18)',
+    }}
+  >
+    <CardContent>
+      <Stack spacing={1.5}>
+        <Typography variant="subtitle2" sx={{ color: 'rgba(226,232,240,0.65)', letterSpacing: 2, textTransform: 'uppercase' }}>
+          {label}
+        </Typography>
+        <Typography variant="h3" fontWeight={700} sx={{ display: 'flex', alignItems: 'baseline', gap: 1 }}>
+          {value ?? '--'}
+          {suffix ? (
+            <Typography component="span" variant="h6" sx={{ color: 'rgba(226,232,240,0.55)', fontWeight: 500 }}>
+              {suffix}
+            </Typography>
+          ) : null}
+        </Typography>
+        {description ? (
+          <Typography variant="body2" sx={{ color: 'rgba(226,232,240,0.55)' }}>
+            {description}
+          </Typography>
+        ) : null}
+      </Stack>
+    </CardContent>
+  </Card>
+)
 
 export default ActivityDetail
