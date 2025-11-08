@@ -93,7 +93,7 @@ const ActivityList = ({ refreshSignal = 0 }) => {
           return (
             <Grid item xs={12} sm={6} key={activity.id}>
               <Card
-                onClick={() => navigate(`/activities/${activity.id}`)}
+                onClick={() => navigate(`/activities/${activity.id}`, { state: { activity } })}
                 sx={{
                   cursor: 'pointer',
                   height: '100%',
