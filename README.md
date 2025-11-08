@@ -224,8 +224,6 @@ npm run dev
 
 * **Keycloak Login**: <img width="1848" height="913" alt="ui 2 redirect to keycloak signin" src="https://github.com/user-attachments/assets/cc6b2e45-afd2-4549-87f5-e0cb66181aeb" />
 
-* **Docker Containers**: <img width="1858" height="903" alt="docker" src="https://github.com/user-attachments/assets/c6131f70-bb9c-41ec-94d8-9cc0fc842b3e" />
-
 * **Eureka Server**: <img width="1890" height="960" alt="eureka server" src="https://github.com/user-attachments/assets/272f3b5c-407a-4738-a46a-8a9a50e44c12" />
 
 
