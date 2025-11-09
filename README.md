@@ -7,16 +7,16 @@ A comprehensive fitness tracking application built with microservices architectu
 
 ## 📋 Table of Contents
 
-- [🎯 Overview](#-overview)
-- [🏗️ System Architecture](#-system-architecture)
-- [✨ Features](#-features)
-- [🛠️ Technology Stack](#-technology-stack)
-- [🔧 Microservices](#-microservices)
-- [🗂️ Project Structure](#-project-structure)
-- [🚀 Getting Started](#-getting-started)
-- [📸 Screenshots](#-screenshots)
-- [🧪 Testing](#-testing)
-- [📧 Contact](#-contact)
+- [🎯 Overview](#overview)
+- [🏗️ System Architecture](#system-architecture)
+- [✨ Features](#features)
+- [🛠️ Technology Stack](#technology-stack)
+- [🔧 Microservices](#microservices)
+- [🗂️ Project Structure](#project-structure)
+- [🚀 Getting Started](#getting-started)
+- [📸 Screenshots](#screenshots)
+- [🧪 Testing](#testing)
+- [📧 Contact](#contact)
 
 
 ---
