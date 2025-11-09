@@ -4,125 +4,140 @@ A comprehensive fitness tracking application built with microservices architectu
 
 <img width="791" height="397" alt="Fitness app architecture drawio" src="https://github.com/user-attachments/assets/5b98713a-4f52-4a49-9b29-becb60508296" />
 
+---
+
+## Table of Contents
+
+- [Overview](#overview)
+- [System Architecture](#system-architecture)
+- [Features](#features)
+- [Technology Stack](#technology-stack)
+- [Microservices](#microservices)
+- [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Environment Variables](#environment-variables)
+  - [Start Infrastructure](#start-infrastructure)
+  - [Keycloak Setup](#keycloak-setup)
+  - [Start Microservices](#start-microservices)
+  - [Start Frontend](#start-frontend)
+- [Screenshots](#screenshots)
+- [Testing](#testing)
+- [Contact](#contact)
 
 ---
 
-## 🎯 Overview
+## Overview
 
 This cloud-native fitness application allows users to track activities and receive AI-powered recommendations. Built with Spring Boot, React, and microservices principles, it leverages:
 
-* Spring Cloud for service discovery, config, and gateway routing
-* Apache Kafka for asynchronous event-driven processing
-* Keycloak for secure authentication
-* Google Gemini API for AI recommendations
+* Spring Cloud for service discovery, config, and gateway routing  
+* Apache Kafka for asynchronous event-driven processing  
+* Keycloak for secure authentication  
+* Google Gemini API for AI recommendations  
 
 ---
 
-## 🏗️ System Architecture
+## System Architecture
 
-* **Frontend**: React SPA with Material-UI
-* **API Gateway**: Centralized routing and OAuth2 JWT validation
-* **Service Discovery**: Eureka for dynamic service lookup
-* **Configuration**: Centralized management via Config Server
-* **Microservices**: User, Activity, AI services
-* **Databases**: PostgreSQL (User) and MongoDB (Activity & AI)
-* **Message Broker**: Apache Kafka for event-driven communication
+* **Frontend**: React SPA with Material-UI  
+* **API Gateway**: Centralized routing and OAuth2 JWT validation  
+* **Service Discovery**: Eureka for dynamic service lookup  
+* **Configuration**: Centralized management via Config Server  
+* **Microservices**: User, Activity, AI services  
+* **Databases**: PostgreSQL (User) and MongoDB (Activity & AI)  
+* **Message Broker**: Apache Kafka for event-driven communication  
 * **Authentication**: Keycloak (OAuth2/OIDC)
 
 All services communicate asynchronously and scale independently.
 
 ---
 
-## ✨ Features
+## Features
 
 ### Core
 
-* User registration and profile management
-* Activity tracking (running, cycling, swimming, etc.)
-* AI-powered personalized fitness recommendations
-* Real-time activity analytics
-* Secure authentication with Keycloak
-* Responsive UI with React + Material-UI
+* User registration and profile management  
+* Activity tracking (running, cycling, swimming, etc.)  
+* AI-powered personalized fitness recommendations  
+* Real-time activity analytics  
+* Secure authentication with Keycloak  
+* Responsive UI with React + Material-UI  
 
 ### Advanced
 
-* Event-driven architecture using Kafka
-* Service-to-service communication via Eureka
-* Centralized configuration with Spring Cloud Config
-* Containerized deployment with Docker
+* Event-driven architecture using Kafka  
+* Service-to-service communication via Eureka  
+* Centralized configuration with Spring Cloud Config  
+* Containerized deployment with Docker  
 
 ---
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 **Backend**
-- Java 17/21
-- Spring Boot 3.5.6
-- Spring Cloud
-- Spring Data JPA & MongoDB
-- Spring Kafka
-- Keycloak
-- Google Gemini API
+- Java 17/21  
+- Spring Boot 3.5.6  
+- Spring Cloud  
+- Spring Data JPA & MongoDB  
+- Spring Kafka  
+- Keycloak  
+- Google Gemini API  
 
 **Frontend**
-- React 19.0.0
-- Vite 6.2.0
-- Material-UI 6.4.6
-- Redux Toolkit
-- React Router
-- Axios
-- React OAuth2 Code PKCE
+- React 19.0.0  
+- Vite 6.2.0  
+- Material-UI 6.4.6  
+- Redux Toolkit  
+- React Router  
+- Axios  
+- React OAuth2 Code PKCE  
 
 **Infrastructure**
-- PostgreSQL
-- MongoDB
-- Kafka
-- Docker
-- Maven
-- Git
-
+- PostgreSQL  
+- MongoDB  
+- Kafka  
+- Docker  
+- Maven  
+- Git  
 
 ---
 
-## 🔧 Microservices
+## Microservices
 
 ### 1. Config Server
-
-* Centralized configuration management
-* Environment-specific configurations
-* Configuration versioning
+* Centralized configuration management  
+* Environment-specific configurations  
+* Configuration versioning  
 
 ### 2. Eureka Server
-
-* Service registration and discovery
-* Health monitoring
-* Load balancing support
+* Service registration and discovery  
+* Health monitoring  
+* Load balancing support  
 
 ### 3. API Gateway
-
-* Request routing to microservices
-* OAuth2 JWT validation
-* CORS configuration
-* User context propagation
+* Request routing to microservices  
+* OAuth2 JWT validation  
+* CORS configuration  
+* User context propagation  
 
 ### 4. User Service
-
-* Manage users: registration, validation, profile retrieval
+* Manage users: registration, validation, profile retrieval  
 
 ### 5. Activity Service
-
-* Store and retrieve user activities
-* Publish activity events to Kafka
+* Store and retrieve user activities  
+* Publish activity events to Kafka  
 
 ### 6. AI Service
-
-* Consume activity events from Kafka
-* Generate AI-powered recommendations
-* Store and retrieve recommendations
+* Consume activity events from Kafka  
+* Generate AI-powered recommendations  
+* Store and retrieve recommendations  
 
 ---
 
-## 🗂️ Project Structure
+## Project Structure
+
+
 
 ```
 backend/
@@ -137,15 +152,15 @@ backend/
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
-* Java 17/21, Maven 3.6+
-* Node.js 18+, npm
-* Docker & Docker Compose
-* PostgreSQL 12+, MongoDB 4.4+
-* Kafka 2.8+, Keycloak 20+
+* Java 17/21, Maven 3.6+  
+* Node.js 18+, npm  
+* Docker & Docker Compose  
+* PostgreSQL 12+, MongoDB 4.4+  
+* Kafka 2.8+, Keycloak 20+  
 
 ### Environment Variables
 
@@ -176,7 +191,7 @@ KAFKA_BOOTSTRAP_SERVERS=localhost:9092
 docker run -d --name keycloak -p 8181:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:latest start-dev
 ```
 
-### 🧑‍💻 Keycloak Setup
+### Keycloak Setup
 
 User signup is currently handled through the **Keycloak Admin Console**, available at port 8181.
 
@@ -204,7 +219,7 @@ npm run dev
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
 * **UI Dashboard**: <img width="1867" height="952" alt="ui 3 " src="https://github.com/user-attachments/assets/cc7a0cc5-0b56-4b92-84b0-20423fc8acff" />
 
@@ -215,7 +230,7 @@ npm run dev
 
 ---
 
-## 🧪 Testing
+## Testing
 
 Run tests for each service:
 
@@ -231,7 +246,7 @@ cd gateway && mvn test
 
 ---
 
-## 📧 Contact
+## Contact
 
 Open an issue for questions or support.
 
