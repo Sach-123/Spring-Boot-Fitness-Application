@@ -5,19 +5,19 @@ A comprehensive fitness tracking application built with microservices architectu
 <img width="791" height="397" alt="Fitness app architecture drawio" src="https://github.com/user-attachments/assets/5b98713a-4f52-4a49-9b29-becb60508296" />
 
 
-## 📋 Table of Contents
+## Table of Contents
 
-* [Overview](#overview)
-* [System Architecture](#system-architecture)
-* [Features](#features)
-* [Technology Stack](#technology-stack)
-* [Microservices](#microservices)
-* [Project Structure](#project-structure)
-* [Getting Started](#getting-started)
-* [Screenshots](#screenshots)
-* [Testing](#testing)
-* [Future Enhancements](#future-enhancements)
-* [Contact](#contact)
+- [Overview](#overview)
+- [System Architecture](#system-architecture)
+- [Features](#features)
+- [Technology Stack](#technology-stack)
+- [Microservices](#microservices)
+- [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
+- [Screenshots](#screenshots)
+- [Testing](#testing)
+- [Contact](#contact)
+
 
 ---
 
